@@ -51,6 +51,8 @@ function filterFlightOffers(flights, min, max) {
     }
   });
 
+  console.log("old list", oldList);
+  console.log("new list", newList);
   return newList;
 }
 
@@ -120,10 +122,6 @@ function SearchForm() {
     return newQueries;
   };
 
-  const getFinalFlightOffers = (flights, min, max) => {
-    filterFlightOffers(flights, min, max);
-  };
-
   useEffect(() => {
     if (flightOffers.length > 0) {
       let final = filterFlightOffers(
@@ -131,7 +129,6 @@ function SearchForm() {
         queries["minTravelTime"],
         queries["maxTravelTime"]
       );
-      debugger;
       setFinalFlightOffers(final);
     }
   }, [flightOffers]);
@@ -152,7 +149,7 @@ function SearchForm() {
         <SelectStay />
         <input type="submit" />
       </Form>
-      {startSearch && finalFlightOffers.length > 0 ? <FlightOffers /> : null}
+      {startSearch ? <FlightOffers offers={finalFlightOffers} /> : null}
     </>
   );
 }
