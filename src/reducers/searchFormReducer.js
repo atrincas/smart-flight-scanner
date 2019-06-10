@@ -11,8 +11,8 @@ const initialState = {
   from: "",
   minTravelTime: 0,
   maxTravelTime: 10,
-  startPeriod: "2019/07/02",
-  endPeriod: "2019/07/28",
+  startPeriod: "",
+  endPeriod: "",
   overnightStay: 0
 };
 

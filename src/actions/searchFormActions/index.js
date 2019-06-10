@@ -18,3 +18,11 @@ export const adjustMinTravelTime = value => {
 export const adjustMaxTravelTime = value => {
   return { type: ADJUST_MAX_TRAVELTIME, value };
 };
+
+export const adjustStartPeriod = value => {
+  return { type: ADJUST_START_PERIOD, value };
+};
+
+export const adjustEndPeriod = value => {
+  return { type: ADJUST_END_PERIOD, value };
+};

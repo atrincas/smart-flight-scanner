@@ -1,19 +1,52 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { useDispatch } from "react-redux";
+
+import {
+  adjustStartPeriod,
+  adjustEndPeriod
+} from "../actions/searchFormActions";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
+const convertDate = date => {
+  return date
+    .toISOString()
+    .slice(0, 10)
+    .split("-")
+    .join("");
+};
+const initialStartDate = convertDate(new Date());
+const initialEndDate = convertDate(new Date());
 
 function SelectPeriod() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [convertedStartDate, setConvertedStartDate] = useState(null);
-  const [convertedEndDate, setConvertedEndDate] = useState(null);
+  const [convertedStartDate, setConvertedStartDate] = useState(
+    initialStartDate
+  );
+  const [convertedEndDate, setConvertedEndDate] = useState(initialEndDate);
+  const dispatch = useDispatch();
+  const changeStartPeriod = useCallback(
+    value => dispatch(adjustStartPeriod(value)),
+    [dispatch]
+  );
+  const changeEndPeriod = useCallback(
+    value => dispatch(adjustEndPeriod(value)),
+    [dispatch]
+  );
 
   const handleStartDate = date => {
     setStartDate(date);
+    let newDate = convertDate(date);
+    setConvertedStartDate(newDate);
+    changeStartPeriod(newDate);
   };
 
   const handleEndDate = date => {
     setEndDate(date);
+    let newDate = convertDate(date);
+    setConvertedEndDate(newDate);
+    changeEndPeriod(newDate);
   };
 
   const convertDate = date => {
@@ -24,16 +57,13 @@ function SelectPeriod() {
       .join("");
   };
 
-  // Convert the selected date for data fetching:
   useEffect(() => {
-    let newDate = convertDate(startDate);
-    setConvertedStartDate(newDate);
-  }, [startDate]);
+    changeStartPeriod(convertedStartDate);
+  }, [changeStartPeriod]);
 
   useEffect(() => {
-    let newDate = convertDate(endDate);
-    setConvertedEndDate(newDate);
-  }, [endDate]);
+    changeEndPeriod(convertedEndDate);
+  }, [changeEndPeriod]);
 
   return (
     <>
