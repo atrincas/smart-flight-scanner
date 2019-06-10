@@ -9,14 +9,7 @@ import SelectPeriod from "./SelectPeriod";
 import SelectStay from "./SelectStay";
 import FlightOffers from "./FlightOffers";
 
-import styled from "styled-components";
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  min-height: 200px;
-`;
+import { Header, FormContainer, Form } from "../styled/Lib";
 
 // Function to calculate the travel time of a flight:
 function calcTravelTime(departure, arrival) {
@@ -141,16 +134,18 @@ function SearchForm() {
     getFlightOffers(convertedQueries);
   };
   return (
-    <>
-      <Form onSubmit={handleSearch}>
-        <SelectAirport />
-        <SelectTravelTime />
-        <SelectPeriod />
-        <SelectStay />
-        <input type="submit" />
-      </Form>
-      {startSearch ? <FlightOffers offers={finalFlightOffers} /> : null}
-    </>
+    <Header>
+      <FormContainer>
+        <Form onSubmit={handleSearch}>
+          <SelectAirport />
+          <SelectTravelTime />
+          <SelectPeriod />
+          <SelectStay />
+          <input type="submit" />
+        </Form>
+        {startSearch ? <FlightOffers offers={finalFlightOffers} /> : null}
+      </FormContainer>
+    </Header>
   );
 }
 
