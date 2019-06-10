@@ -5,6 +5,7 @@ import { changeAirportValue } from "../actions/searchFormActions";
 
 function SelectAirport() {
   const airports = useSelector(state => state.airports.airports);
+  const firstValue = airports[0].id;
   const [selectedAirport, setSelectedAirport] = useState(airports[0].name);
   const dispatch = useDispatch();
   const changeCurrentValue = useCallback(
@@ -13,12 +14,9 @@ function SelectAirport() {
   );
 
   useEffect(() => {
-    changeCurrentValue(airports[0].id);
-  }, []);
-
-  useEffect(() => {
-    console.log("selectedairport", selectedAirport);
-  }, [selectedAirport]);
+    // Get the airport-id from the first value in the airport array and dispatch it:
+    changeCurrentValue(firstValue);
+  }, [changeCurrentValue, firstValue]);
 
   const handleChange = e => {
     let selectedIndex = e.target.options.selectedIndex;

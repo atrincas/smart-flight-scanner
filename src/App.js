@@ -12,7 +12,7 @@ export default function App() {
 
   useEffect(() => {
     getAirports();
-  }, []);
+  }, [getAirports]);
 
   return airports.isFetching ? <div>...Loading</div> : <SearchForm />;
 }
