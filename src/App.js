@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useEffect, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+import { fetchAirports } from "./actions";
+import SearchForm from "./components/SearchForm";
 import "./App.css";
 
-function App() {
-  return <div className="App" />;
-}
+export default function App() {
+  const dispatch = useDispatch();
+  const getAirports = useCallback(() => dispatch(fetchAirports()), [dispatch]);
+  const airports = useSelector(state => state.airports);
 
-export default App;
+  useEffect(() => {
+    getAirports();
+  }, []);
+
+  return airports.isFetching ? <div>...Loading</div> : <SearchForm />;
+}
