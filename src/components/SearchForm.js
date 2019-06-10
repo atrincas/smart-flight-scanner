@@ -1,5 +1,4 @@
-import React, { useEffect, useCallback } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
 
 import SelectAirport from "./SelectAirport";
 import SelectTravelTime from "./SelectTravelTime";
@@ -16,12 +15,6 @@ const Form = styled.form`
 `;
 
 function SearchForm() {
-  const queries = useSelector(state => state.searchQueries);
-
-  useEffect(() => {
-    console.log(queries);
-  }, []);
-
   return (
     <>
       <Form
