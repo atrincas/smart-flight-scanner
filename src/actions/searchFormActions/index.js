@@ -10,3 +10,11 @@ import {
 export const changeAirportValue = value => {
   return { type: ADJUST_FROM, value };
 };
+
+export const adjustMinTravelTime = value => {
+  return { type: ADJUST_MIN_TRAVELTIME, value };
+};
+
+export const adjustMaxTravelTime = value => {
+  return { type: ADJUST_MAX_TRAVELTIME, value };
+};
