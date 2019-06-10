@@ -8,7 +8,7 @@ const fetchFightOffersRequest = () => {
   return { type: FETCH_FLIGHT_OFFERS_REQUEST };
 };
 const fetchFlightOffersResult = data => {
-  return { type: FETCH_FLIGHT_OFFERS_SUCCES, payload: data.flightOffer };
+  return { type: FETCH_FLIGHT_OFFERS_SUCCES, payload: data };
 };
 
 export const fetchFlightOffers = queries => {
@@ -30,6 +30,6 @@ export const fetchFlightOffers = queries => {
     dispatch(fetchFightOffersRequest());
     const response = await axios(config);
     console.log(response);
-    dispatch(fetchFlightOffersResult(response.data));
+    dispatch(fetchFlightOffersResult(response.data.flightOffer));
   };
 };

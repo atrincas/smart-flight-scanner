@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { fetchFlightOffers } from "../actions/fetchFlightOffers";
@@ -18,9 +18,47 @@ const Form = styled.form`
   min-height: 200px;
 `;
 
+// Function to calculate the travel time of a flight:
+function calcTravelTime(departure, arrival) {
+  let dateDep = new Date(departure),
+    dateArr = new Date(arrival);
+  let travelTime = (dateArr - dateDep) / (1000 * 3600);
+
+  return travelTime;
+}
+
+// Function to filter flight offers based on travel time:
+function filterFlightOffers(flights, min, max) {
+  let newList = [],
+    oldList = flights;
+
+  oldList.forEach(flightOffer => {
+    let outboundDep = flightOffer["outboundFlight"]["departureDateTime"],
+      outboundArr = flightOffer["outboundFlight"]["arrivalDateTime"],
+      inboundDep = flightOffer["inboundFlight"]["departureDateTime"],
+      inboundArr = flightOffer["inboundFlight"]["arrivalDateTime"];
+
+    let outboundTime = calcTravelTime(outboundDep, outboundArr),
+      inboundTime = calcTravelTime(inboundDep, inboundArr);
+
+    if (
+      outboundTime >= min &&
+      inboundTime >= min &&
+      outboundTime <= max &&
+      inboundTime <= max
+    ) {
+      newList.push(flightOffer);
+    }
+  });
+
+  return newList;
+}
+
 function SearchForm() {
   const [startSearch, setStartSearch] = useState(false);
+  const [finalFlightOffers, setFinalFlightOffers] = useState([]);
   const queries = useSelector(state => state.searchQueries);
+  const flightOffers = useSelector(state => state.flightOffers.flightOffers);
   const dispatch = useDispatch();
   const getFlightOffers = useCallback(
     values => dispatch(fetchFlightOffers(values)),
@@ -82,6 +120,22 @@ function SearchForm() {
     return newQueries;
   };
 
+  const getFinalFlightOffers = (flights, min, max) => {
+    filterFlightOffers(flights, min, max);
+  };
+
+  useEffect(() => {
+    if (flightOffers.length > 0) {
+      let final = filterFlightOffers(
+        flightOffers,
+        queries["minTravelTime"],
+        queries["maxTravelTime"]
+      );
+      debugger;
+      setFinalFlightOffers(final);
+    }
+  }, [flightOffers]);
+
   const handleSearch = e => {
     e.preventDefault();
     setStartSearch(true);
@@ -98,7 +152,7 @@ function SearchForm() {
         <SelectStay />
         <input type="submit" />
       </Form>
-      {startSearch ? <FlightOffers /> : null}
+      {startSearch && finalFlightOffers.length > 0 ? <FlightOffers /> : null}
     </>
   );
 }
