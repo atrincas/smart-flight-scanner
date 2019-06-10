@@ -8,23 +8,9 @@ import {
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const convertDate = date => {
-  return date
-    .toISOString()
-    .slice(0, 10)
-    .split("-")
-    .join("");
-};
-const initialStartDate = convertDate(new Date());
-const initialEndDate = convertDate(new Date());
-
 function SelectPeriod() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [convertedStartDate, setConvertedStartDate] = useState(
-    initialStartDate
-  );
-  const [convertedEndDate, setConvertedEndDate] = useState(initialEndDate);
   const dispatch = useDispatch();
   const changeStartPeriod = useCallback(
     value => dispatch(adjustStartPeriod(value)),
@@ -37,32 +23,20 @@ function SelectPeriod() {
 
   const handleStartDate = date => {
     setStartDate(date);
-    let newDate = convertDate(date);
-    setConvertedStartDate(newDate);
-    changeStartPeriod(newDate);
+    changeStartPeriod(date);
   };
 
   const handleEndDate = date => {
     setEndDate(date);
-    let newDate = convertDate(date);
-    setConvertedEndDate(newDate);
-    changeEndPeriod(newDate);
-  };
-
-  const convertDate = date => {
-    return date
-      .toISOString()
-      .slice(0, 10)
-      .split("-")
-      .join("");
+    changeEndPeriod(date);
   };
 
   useEffect(() => {
-    changeStartPeriod(convertedStartDate);
+    changeStartPeriod(startDate);
   }, [changeStartPeriod]);
 
   useEffect(() => {
-    changeEndPeriod(convertedEndDate);
+    changeEndPeriod(endDate);
   }, [changeEndPeriod]);
 
   return (
