@@ -4,7 +4,7 @@ import {
   ADJUST_MAX_TRAVELTIME,
   ADJUST_START_PERIOD,
   ADJUST_END_PERIOD,
-  ADJUST_OVERNIGHT_STAY
+  ADJUST_OVERNIGHT_STAYS
 } from "../types";
 
 export const changeAirportValue = value => {
@@ -25,4 +25,8 @@ export const adjustStartPeriod = value => {
 
 export const adjustEndPeriod = value => {
   return { type: ADJUST_END_PERIOD, value };
+};
+
+export const adjustOvernightStays = value => {
+  return { type: ADJUST_OVERNIGHT_STAYS, value };
 };

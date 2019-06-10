@@ -4,7 +4,7 @@ import {
   ADJUST_MAX_TRAVELTIME,
   ADJUST_START_PERIOD,
   ADJUST_END_PERIOD,
-  ADJUST_OVERNIGHT_STAY
+  ADJUST_OVERNIGHT_STAYS
 } from "../actions/types";
 
 const initialState = {
@@ -43,7 +43,7 @@ export default (state = initialState, action) => {
         ...state,
         endPeriod: action.value
       };
-    case ADJUST_OVERNIGHT_STAY:
+    case ADJUST_OVERNIGHT_STAYS:
       return {
         ...state,
         overnightStay: action.value
