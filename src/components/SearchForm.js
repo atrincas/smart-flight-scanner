@@ -9,7 +9,7 @@ import SelectPeriod from "./SelectPeriod";
 import SelectStay from "./SelectStay";
 import FlightOffers from "./FlightOffers";
 
-import { Header, FormContainer, Form } from "../styled/Lib";
+import { Header, FormContainer, FormRow, Form } from "../styled/Lib";
 
 // Function to calculate the travel time of a flight:
 function calcTravelTime(departure, arrival) {
@@ -137,11 +137,21 @@ function SearchForm() {
     <Header>
       <FormContainer>
         <Form onSubmit={handleSearch}>
-          <SelectAirport />
-          <SelectTravelTime />
-          <SelectPeriod />
-          <SelectStay />
-          <input type="submit" />
+          <FormRow>
+            <SelectAirport />
+          </FormRow>
+          <FormRow>
+            <SelectTravelTime />
+          </FormRow>
+          <FormRow>
+            <SelectPeriod />
+          </FormRow>
+          <FormRow>
+            <SelectStay />
+          </FormRow>
+          <FormRow>
+            <input type="submit" />
+          </FormRow>
         </Form>
         {startSearch ? <FlightOffers offers={finalFlightOffers} /> : null}
       </FormContainer>

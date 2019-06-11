@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { changeAirportValue } from "../actions/searchFormActions";
 
+import { Select } from "../styled/Lib";
+
 function SelectAirport() {
   const airports = useSelector(state => state.airports.airports);
   const firstValue = airports[0].id;
@@ -28,13 +30,13 @@ function SelectAirport() {
   return (
     <label>
       From:
-      <select value={selectedAirport} onChange={handleChange}>
+      <Select value={selectedAirport} onChange={handleChange}>
         {airports.map(airport => (
           <option key={airport.id} data-id={airport.id} value={airport.name}>
             {airport.name}
           </option>
         ))}
-      </select>
+      </Select>
     </label>
   );
 }

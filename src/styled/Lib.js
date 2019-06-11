@@ -25,11 +25,19 @@ export const Header = styled.div`
 
 export const FormContainer = styled.div`
   position: absolute;
-  top: 35%;
+  top: 50%;
   left: 0;
   right: 0;
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
+  background: #fff;
+  max-width: 642px;
+  width: 100%;
+  margin: auto;
+  padding: 45px 25px 25px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.4);
 `;
 
 export const Form = styled.form`
@@ -37,6 +45,25 @@ export const Form = styled.form`
   flex-direction: column;
   justify-content: space-around;
   max-width: 720px;
+  min-height: 350px;
   width: 100%;
   margin: auto;
+`;
+
+export const FormRow = styled.div``;
+
+export const Select = styled.select`
+  background-color: #fff;
+  height: 50px;
+  padding: 0px 15px;
+  padding-top: 24px;
+  color: #191a1e;
+  border: 2px solid #dfe5e9;
+  font-size: 16px;
+  font-weight: 700;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-radius: 4px;
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
 `;
