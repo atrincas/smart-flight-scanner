@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { fetchAirports } from "./actions";
 import SearchForm from "./components/SearchForm";
-import "./App.css";
 
 export default function App() {
   const dispatch = useDispatch();
