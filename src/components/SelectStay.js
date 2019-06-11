@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 
 import { adjustOvernightStays } from "../actions/searchFormActions";
 
+import { FormGroup, FormLabel, InputNumber } from "../styled/Lib";
+
 function SelectStay() {
   const [overnightStays, setOvernightStays] = useState(0);
   const dispatch = useDispatch();
@@ -17,16 +19,16 @@ function SelectStay() {
   };
 
   return (
-    <>
-      <label>Number of overnight stays:</label>
-      <input
+    <FormGroup>
+      <FormLabel>Number of overnight stays</FormLabel>
+      <InputNumber
         type="number"
         min="0"
         max="300"
         value={overnightStays}
         onChange={handleOvernightStays}
       />
-    </>
+    </FormGroup>
   );
 }
 

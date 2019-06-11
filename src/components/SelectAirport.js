@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { changeAirportValue } from "../actions/searchFormActions";
 
-import { Select } from "../styled/Lib";
+import { Select, FormGroup, FormLabel } from "../styled/Lib";
 
 function SelectAirport() {
   const airports = useSelector(state => state.airports.airports);
@@ -28,8 +28,8 @@ function SelectAirport() {
   };
 
   return (
-    <label>
-      From:
+    <FormGroup>
+      <FormLabel>Flying From</FormLabel>
       <Select value={selectedAirport} onChange={handleChange}>
         {airports.map(airport => (
           <option key={airport.id} data-id={airport.id} value={airport.name}>
@@ -37,7 +37,7 @@ function SelectAirport() {
           </option>
         ))}
       </Select>
-    </label>
+    </FormGroup>
   );
 }
 

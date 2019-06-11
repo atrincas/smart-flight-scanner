@@ -62,9 +62,15 @@ export const Form = styled.form`
 
 export const FormRow = styled.div``;
 
+export const FormGroup = styled.div`
+  position: relative;
+  margin-bottom: 20px;
+`;
+
 export const Select = styled.select`
   background-color: #fff;
   height: 50px;
+  width: 100%;
   padding: 0px 15px;
   padding-top: 24px;
   color: #191a1e;
@@ -76,4 +82,49 @@ export const Select = styled.select`
   border-radius: 4px;
   -webkit-transition: 0.2s all;
   transition: 0.2s all;
+`;
+
+export const InputNumber = styled.input`
+  background-color: #fff;
+  height: 50px;
+  width: 50%;
+  padding: 0px 15px;
+  padding-top: 20px
+  color: #191a1e;
+  border: 2px solid #dfe5e9;
+  font-size: 16px;
+  font-weight: 700;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-radius: 4px;
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
+`;
+
+export const FormLabel = styled.span`
+  position: absolute;
+  top: 6px;
+  left: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 24px;
+  height: 24px;
+  font-size: 12px;
+  color: #98c9ee;
+`;
+
+export const FormButton = styled.input.attrs({
+  type: "submit",
+  value: "Show Flights"
+})`
+  color: #fff;
+  background-color: #4fa3e3;
+  cursor: pointer;
+  font-weight: 400;
+  height: 65px;
+  font-size: 18px;
+  border: none;
+  width: 100%;
+  border-radius: 4px;
+  text-transform: uppercase;
 `;

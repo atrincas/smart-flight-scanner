@@ -9,7 +9,13 @@ import SelectPeriod from "./SelectPeriod";
 import SelectStay from "./SelectStay";
 import FlightOffers from "./FlightOffers";
 
-import { Header, FormContainer, FormRow, Form } from "../styled/Lib";
+import {
+  Header,
+  FormContainer,
+  FormRow,
+  Form,
+  FormButton
+} from "../styled/Lib";
 
 // Function to calculate the travel time of a flight:
 function calcTravelTime(departure, arrival) {
@@ -134,28 +140,30 @@ function SearchForm() {
     getFlightOffers(convertedQueries);
   };
   return (
-    <Header>
-      <FormContainer>
-        <Form onSubmit={handleSearch}>
-          <FormRow>
-            <SelectAirport />
-          </FormRow>
-          <FormRow>
-            <SelectTravelTime />
-          </FormRow>
-          <FormRow>
-            <SelectPeriod />
-          </FormRow>
-          <FormRow>
-            <SelectStay />
-          </FormRow>
-          <FormRow>
-            <input type="submit" />
-          </FormRow>
-        </Form>
-        {startSearch ? <FlightOffers offers={finalFlightOffers} /> : null}
-      </FormContainer>
-    </Header>
+    <>
+      <Header>
+        <FormContainer>
+          <Form onSubmit={handleSearch}>
+            <FormRow>
+              <SelectAirport />
+            </FormRow>
+            <FormRow>
+              <SelectTravelTime />
+            </FormRow>
+            <FormRow>
+              <SelectPeriod />
+            </FormRow>
+            <FormRow>
+              <SelectStay />
+            </FormRow>
+            <FormRow>
+              <FormButton />
+            </FormRow>
+          </Form>
+        </FormContainer>
+      </Header>
+      {startSearch ? <FlightOffers offers={finalFlightOffers} /> : null}
+    </>
   );
 }
 

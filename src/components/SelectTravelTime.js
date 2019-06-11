@@ -6,7 +6,7 @@ import {
   adjustMaxTravelTime
 } from "../actions/searchFormActions";
 
-import { Select } from "../styled/Lib";
+import { Select, FormGroup, FormLabel } from "../styled/Lib";
 
 function SelectTravelTime() {
   const travelTimes = [0, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
@@ -34,8 +34,8 @@ function SelectTravelTime() {
 
   return (
     <>
-      <label>
-        Minimum travel time (hours):
+      <FormGroup>
+        <FormLabel>Minimum travel time (hours)</FormLabel>
         <Select value={mintravelTime} onChange={handleMinTravelTime}>
           {travelTimes.map((time, i) => (
             <option key={i} value={time}>
@@ -43,9 +43,9 @@ function SelectTravelTime() {
             </option>
           ))}
         </Select>
-      </label>
-      <label>
-        Maximum travel time (hours):
+      </FormGroup>
+      <FormGroup>
+        <FormLabel>Maximum travel time (hours)</FormLabel>
         <Select value={maxtravelTime} onChange={handleMaxTravelTime}>
           {travelTimes.map((time, i) => (
             <option key={i} value={time}>
@@ -53,7 +53,7 @@ function SelectTravelTime() {
             </option>
           ))}
         </Select>
-      </label>
+      </FormGroup>
     </>
   );
 }

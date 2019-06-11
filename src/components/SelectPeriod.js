@@ -8,9 +8,30 @@ import {
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import "../styled/date-picker.css";
+import styled from "styled-components";
+import { FormGroup } from "../styled/Lib";
+
+const LabelCalender = styled.label`
+  display: block;
+  top: 6px;
+  padding-left: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 24px;
+  font-size: 12px;
+  color: #98c9ee;
+`;
+
+const addDays = (date, days) => {
+  let result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+};
+
 function SelectPeriod() {
   const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(addDays(new Date(), 2));
   const dispatch = useDispatch();
   const changeStartPeriod = useCallback(
     value => dispatch(adjustStartPeriod(value)),
@@ -40,12 +61,29 @@ function SelectPeriod() {
   }, [changeEndPeriod]);
 
   return (
-    <>
-      <label>Startdate:</label>
-      <DatePicker selected={startDate} onChange={handleStartDate} />
-      <label>Enddate:</label>
-      <DatePicker selected={endDate} onChange={handleEndDate} />
-    </>
+    <FormGroup>
+      <LabelCalender>Select period of travel</LabelCalender>
+      <DatePicker
+        selected={startDate}
+        selectsStart
+        startDate={startDate}
+        endDate={endDate}
+        onChange={handleStartDate}
+        dateFormat="dd/MM/yyy"
+        className="calender"
+      />{" "}
+      <DatePicker
+        placeholderText="End"
+        selected={endDate}
+        selectsEnd
+        startDate={startDate}
+        endDate={endDate}
+        onChange={handleEndDate}
+        minDate={startDate}
+        dateFormat="dd/MM/yyy"
+        className="calender"
+      />
+    </FormGroup>
   );
 }
 
