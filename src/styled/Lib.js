@@ -1,6 +1,16 @@
 import styled from "styled-components";
+import { createGlobalStyle } from "styled-components";
 import headerBackground from "./img/header-background.jpeg";
 
+export const GlobalStyle = createGlobalStyle`
+  @import url('https://fonts.googleapis.com/css?family=Arimo|Open+Sans&display=swap');
+  
+  body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Arimo', sans-serif;
+  }
+  `;
 export const Header = styled.div`
   position: relative;
   background-image: url(${headerBackground});
