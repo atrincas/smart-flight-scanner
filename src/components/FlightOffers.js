@@ -121,9 +121,11 @@ const TicketButton = styled.button`
 
 const PriceTitle = styled.div``;
 
-function FlightOffers({ offers }) {
-  return offers.length === 0 ? (
+function FlightOffers({ offers, noSearchResults }) {
+  return offers.length === 0 && !noSearchResults ? (
     <div>...Loading</div>
+  ) : noSearchResults ? (
+    <div>No Search Results!</div>
   ) : (
     <FlightOffersContainer>
       <FlightOffersUl>

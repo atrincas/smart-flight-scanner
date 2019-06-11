@@ -58,6 +58,7 @@ function filterFlightOffers(flights, min, max) {
 function SearchForm() {
   const [startSearch, setStartSearch] = useState(false);
   const [finalFlightOffers, setFinalFlightOffers] = useState([]);
+  const [noSearchResults, setNoSearchResults] = useState(false);
   const queries = useSelector(state => state.searchQueries);
   const flightOffers = useSelector(state => state.flightOffers.flightOffers);
   const dispatch = useDispatch();
@@ -122,13 +123,16 @@ function SearchForm() {
   };
 
   useEffect(() => {
-    if (flightOffers.length > 0) {
+    console.log("useEffect:", flightOffers);
+    if (typeof flightOffers !== "undefined" && flightOffers.length > 0) {
       let final = filterFlightOffers(
         flightOffers,
         queries["minTravelTime"],
         queries["maxTravelTime"]
       );
       setFinalFlightOffers(final);
+    } else if (typeof flightOffers === "undefined") {
+      setNoSearchResults(true);
     }
   }, [flightOffers]);
 
@@ -162,7 +166,12 @@ function SearchForm() {
           </Form>
         </FormContainer>
       </Header>
-      {startSearch ? <FlightOffers offers={finalFlightOffers} /> : null}
+      {startSearch ? (
+        <FlightOffers
+          offers={finalFlightOffers}
+          noSearchResults={noSearchResults}
+        />
+      ) : null}
     </>
   );
 }
