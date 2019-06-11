@@ -17,43 +17,7 @@ import {
   FormButton
 } from "../styled/Lib";
 
-// Function to calculate the travel time of a flight:
-function calcTravelTime(departure, arrival) {
-  let dateDep = new Date(departure),
-    dateArr = new Date(arrival);
-  let travelTime = (dateArr - dateDep) / (1000 * 3600);
-
-  return travelTime;
-}
-
-// Function to filter flight offers based on travel time:
-function filterFlightOffers(flights, min, max) {
-  let newList = [],
-    oldList = flights;
-
-  oldList.forEach(flightOffer => {
-    let outboundDep = flightOffer["outboundFlight"]["departureDateTime"],
-      outboundArr = flightOffer["outboundFlight"]["arrivalDateTime"],
-      inboundDep = flightOffer["inboundFlight"]["departureDateTime"],
-      inboundArr = flightOffer["inboundFlight"]["arrivalDateTime"];
-
-    let outboundTime = calcTravelTime(outboundDep, outboundArr),
-      inboundTime = calcTravelTime(inboundDep, inboundArr);
-
-    if (
-      outboundTime >= min &&
-      inboundTime >= min &&
-      outboundTime <= max &&
-      inboundTime <= max
-    ) {
-      newList.push(flightOffer);
-    }
-  });
-
-  console.log("old list", oldList);
-  console.log("new list", newList);
-  return newList;
-}
+import { filterFlightOffers, convertQueries } from "../utils";
 
 function SearchForm() {
   const [startSearch, setStartSearch] = useState(false);
@@ -67,63 +31,7 @@ function SearchForm() {
     [dispatch]
   );
 
-  const convertDate = date => {
-    if (typeof date === "undefined") {
-      return;
-    }
-    return date
-      .toISOString()
-      .slice(0, 10)
-      .split("-")
-      .join("");
-  };
-
-  const addDays = (date, days) => {
-    let result = new Date(date);
-    result.setDate(result.getDate() + days);
-    return result;
-  };
-  const subDays = (date, days) => {
-    let result = new Date(date);
-    result.setDate(result.getDate() - days);
-    return result;
-  };
-
-  const calcStartPeriodRange = (startDate, endDate, overnighStays) => {
-    let start = startDate,
-      end = subDays(endDate, overnighStays);
-    return convertDate(start) + "-" + convertDate(end);
-  };
-
-  const calcEndPeriodRange = (startDate, endDate, overnighStays) => {
-    // let start = addDays(startDate, overnighStays),
-    //   end = endDate;
-    return convertDate(startDate) + "-" + convertDate(endDate);
-  };
-
-  const convertQueries = queries => {
-    // Prevent function from running if queries is undefined:
-    if (typeof queries === "undefined") {
-      return;
-    }
-    let newQueries = {};
-    newQueries["Origin"] = queries["from"];
-    newQueries["OriginDepartureDate"] = calcStartPeriodRange(
-      queries["startPeriod"],
-      queries["endPeriod"],
-      queries["overnightStay"]
-    );
-    newQueries["OriginArrivalDate"] = calcEndPeriodRange(
-      queries["startPeriod"],
-      queries["endPeriod"],
-      queries["overnightStay"]
-    );
-    newQueries["DaysAtDestination"] = queries["overnightStay"];
-    return newQueries;
-  };
-
   useEffect(() => {
-    console.log("useEffect:", flightOffers);
     if (typeof flightOffers !== "undefined" && flightOffers.length > 0) {
       let final = filterFlightOffers(
         flightOffers,
