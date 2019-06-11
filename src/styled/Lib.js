@@ -9,8 +9,11 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
     font-family: 'Arimo', sans-serif;
+    background-color: #f3f2f5;
   }
   `;
+
+// SEARCHFORM.JS //
 export const Header = styled.div`
   position: relative;
   background-image: url(${headerBackground});
@@ -128,3 +131,5 @@ export const FormButton = styled.input.attrs({
   border-radius: 4px;
   text-transform: uppercase;
 `;
+
+// FLIGHTOFFERS.JS //
