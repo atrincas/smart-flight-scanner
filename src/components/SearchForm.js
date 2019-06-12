@@ -46,6 +46,7 @@ function SearchForm() {
 
   const handleSearch = e => {
     e.preventDefault();
+    setFinalFlightOffers([]);
     setStartSearch(true);
     const convertedQueries = convertQueries(queries);
     console.log(convertedQueries);
