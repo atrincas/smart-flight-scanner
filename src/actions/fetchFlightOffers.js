@@ -12,7 +12,6 @@ const fetchFlightOffersResult = data => {
 };
 
 export const fetchFlightOffers = queries => {
-  console.log(queries);
   const key = process.env.REACT_APP_API_KEY;
   const param = queries;
   const config = {
@@ -29,7 +28,6 @@ export const fetchFlightOffers = queries => {
   return async dispatch => {
     dispatch(fetchFightOffersRequest());
     const response = await axios(config);
-    console.log(response);
     dispatch(fetchFlightOffersResult(response.data.flightOffer));
   };
 };
