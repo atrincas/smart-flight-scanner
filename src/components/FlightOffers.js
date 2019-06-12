@@ -1,4 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux";
+
+import {
+  calcTravelTimeString,
+  convertFlightDate,
+  convertFlightTime,
+  airportDetails
+} from "../utils";
 
 import styled from "styled-components";
 
@@ -28,30 +36,40 @@ const FlightDetails = styled.div`
   display: flex;
   margin: 10px;
 `;
-const FlightTitle = styled.div`
-  display: flex;
-  align-items: center;
-  width: 25%;
-`;
 const FlightInfo = styled.div`
   display: flex;
-  justify-content: space-evenly;
-  width: 75%;
+  width: 100%;
+`;
+const FlightInfoDate = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 10%;
+  border: 1px dotted #000;
+  font-size: 12px;
+  font-style: italic;
 `;
 const FlightInfoBlock = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  align-items: center;
+  width: 30%;
+`;
+const FlightInfoBlockHeader = styled.div``;
+const FlightInfoBlockSubHeader = styled.div`
+  font-size: 10px;
+  text-align: center;
 `;
 const FlightDuration = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 30%;
+  font-size: 12px;
 `;
 const LineUl = styled.div`
   height: 2px;
-  width: 90%;
+  width: 50%;
   background-color: #817b8f;
   margin: 0.375rem auto;
   padding: 0;
@@ -122,6 +140,7 @@ const TicketButton = styled.button`
 const PriceTitle = styled.div``;
 
 function FlightOffers({ offers, noSearchResults }) {
+  const airports = useSelector(state => state.airports.airports);
   return offers.length === 0 && !noSearchResults ? (
     <div>...Loading</div>
   ) : noSearchResults ? (
@@ -135,38 +154,198 @@ function FlightOffers({ offers, noSearchResults }) {
               <TicketContainer>
                 <TicketDetails>
                   <FlightDetails>
-                    <FlightTitle>Outbound Flight</FlightTitle>
                     <FlightInfo>
+                      <FlightInfoDate>
+                        <div>
+                          {convertFlightDate(
+                            flightOffer.outboundFlight.departureDateTime,
+                            "month"
+                          )}
+                        </div>
+                        <div>
+                          {convertFlightDate(
+                            flightOffer.outboundFlight.departureDateTime,
+                            "day"
+                          )}
+                        </div>
+                        <div>
+                          {convertFlightDate(
+                            flightOffer.outboundFlight.departureDateTime,
+                            "year"
+                          )}
+                        </div>
+                      </FlightInfoDate>
                       <FlightInfoBlock>
-                        <div className="flight-time">10:00</div>
-                        <div className="flight-city">AMS</div>
+                        <FlightInfoBlockHeader>
+                          <span className="flight-city">
+                            {
+                              flightOffer.outboundFlight.departureAirport
+                                .locationCode
+                            }
+                          </span>{" "}
+                          <span className="flight-time">
+                            {convertFlightTime(
+                              flightOffer.outboundFlight.departureDateTime
+                            )}
+                          </span>
+                        </FlightInfoBlockHeader>
+                        <FlightInfoBlockSubHeader>
+                          {airportDetails(
+                            airports,
+                            flightOffer.outboundFlight.departureAirport
+                              .locationCode,
+                            "name"
+                          )}
+                          ,{" "}
+                          {
+                            airportDetails(
+                              airports,
+                              flightOffer.outboundFlight.departureAirport
+                                .locationCode,
+                              "country"
+                            )["name"]
+                          }
+                        </FlightInfoBlockSubHeader>
                       </FlightInfoBlock>
                       <FlightDuration>
-                        <span className="duration">1u.20</span>
+                        <span className="duration">
+                          {calcTravelTimeString(
+                            flightOffer.outboundFlight.departureDateTime,
+                            flightOffer.outboundFlight.arrivalDateTime
+                          )}
+                        </span>
                         <LineUl />
                         <span className="title">Direct</span>
                       </FlightDuration>
                       <FlightInfoBlock>
-                        <div className="flight-time">12:00</div>
-                        <div className="flight-city">LTN</div>
+                        <FlightInfoBlockHeader>
+                          <span className="flight-city">
+                            {
+                              flightOffer.outboundFlight.arrivalAirport
+                                .locationCode
+                            }
+                          </span>{" "}
+                          <span className="flight-time">
+                            {convertFlightTime(
+                              flightOffer.outboundFlight.arrivalDateTime
+                            )}
+                          </span>
+                        </FlightInfoBlockHeader>
+                        <FlightInfoBlockSubHeader>
+                          {airportDetails(
+                            airports,
+                            flightOffer.outboundFlight.arrivalAirport
+                              .locationCode,
+                            "name"
+                          )}
+                          ,{" "}
+                          {
+                            airportDetails(
+                              airports,
+                              flightOffer.outboundFlight.arrivalAirport
+                                .locationCode,
+                              "country"
+                            )["name"]
+                          }
+                        </FlightInfoBlockSubHeader>
                       </FlightInfoBlock>
                     </FlightInfo>
                   </FlightDetails>
                   <FlightDetails>
-                    <FlightTitle>Inbound Flight</FlightTitle>
                     <FlightInfo>
+                      <FlightInfoDate>
+                        <div>
+                          {convertFlightDate(
+                            flightOffer.inboundFlight.departureDateTime,
+                            "month"
+                          )}
+                        </div>
+                        <div>
+                          {convertFlightDate(
+                            flightOffer.inboundFlight.departureDateTime,
+                            "day"
+                          )}
+                        </div>
+                        <div>
+                          {convertFlightDate(
+                            flightOffer.inboundFlight.departureDateTime,
+                            "year"
+                          )}
+                        </div>
+                      </FlightInfoDate>
                       <FlightInfoBlock>
-                        <div className="flight-time">15:00</div>
-                        <div className="flight-city">LTN</div>
+                        <FlightInfoBlockHeader>
+                          <span className="flight-city">
+                            {
+                              flightOffer.inboundFlight.departureAirport
+                                .locationCode
+                            }
+                          </span>{" "}
+                          <span className="flight-time">
+                            {convertFlightTime(
+                              flightOffer.inboundFlight.departureDateTime
+                            )}
+                          </span>
+                        </FlightInfoBlockHeader>
+                        <FlightInfoBlockSubHeader>
+                          {airportDetails(
+                            airports,
+                            flightOffer.inboundFlight.departureAirport
+                              .locationCode,
+                            "name"
+                          )}
+                          ,{" "}
+                          {
+                            airportDetails(
+                              airports,
+                              flightOffer.inboundFlight.departureAirport
+                                .locationCode,
+                              "country"
+                            )["name"]
+                          }
+                        </FlightInfoBlockSubHeader>
                       </FlightInfoBlock>
                       <FlightDuration>
-                        <span className="duration">1u.20</span>
+                        <span className="duration">
+                          {calcTravelTimeString(
+                            flightOffer.inboundFlight.departureDateTime,
+                            flightOffer.inboundFlight.arrivalDateTime
+                          )}
+                        </span>
                         <LineUl />
                         <span className="title">Direct</span>
                       </FlightDuration>
                       <FlightInfoBlock>
-                        <div className="flight-time">20:30</div>
-                        <div className="flight-city">AMS</div>
+                        <FlightInfoBlockHeader>
+                          <span className="flight-city">
+                            {
+                              flightOffer.inboundFlight.arrivalAirport
+                                .locatiodivCode
+                            }
+                          </span>{" "}
+                          <span className="flight-time">
+                            {convertFlightTime(
+                              flightOffer.inboundFlight.arrivalDateTime
+                            )}
+                          </span>
+                        </FlightInfoBlockHeader>
+                        <FlightInfoBlockSubHeader>
+                          {airportDetails(
+                            airports,
+                            flightOffer.inboundFlight.arrivalAirport
+                              .locationCode,
+                            "name"
+                          )}
+                          ,{" "}
+                          {
+                            airportDetails(
+                              airports,
+                              flightOffer.inboundFlight.arrivalAirport
+                                .locationCode,
+                              "country"
+                            )["name"]
+                          }
+                        </FlightInfoBlockSubHeader>
                       </FlightInfoBlock>
                     </FlightInfo>
                   </FlightDetails>

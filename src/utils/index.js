@@ -7,6 +7,67 @@ export const calcTravelTime = function(departure, arrival) {
   return travelTime;
 };
 
+export const calcTravelTimeString = function(departure, arrival) {
+  let dateDep = new Date(departure),
+    dateArr = new Date(arrival);
+  let travelTime = (dateArr - dateDep) / (1000 * 3600);
+  let hours = Math.floor(travelTime);
+  let minutes = Math.round((travelTime - hours) * 60);
+  let travelTimeString = minutes ? `${hours}h ${minutes}m` : `${hours}h`;
+
+  return travelTimeString;
+};
+
+export const convertFlightTime = function(time) {
+  let timeString = new Date(time).toLocaleTimeString("nl-NL", {
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+  return timeString;
+};
+
+export const convertFlightDate = function(date, type) {
+  let d;
+
+  if (type === "month") {
+    const monthNames = [
+      "Jan.",
+      "Feb.",
+      "Mar.",
+      "Apr.",
+      "May.",
+      "Jun.",
+      "Jul.",
+      "Aug.",
+      "Sep.",
+      "Oct.",
+      "Nov.",
+      "Dec."
+    ];
+
+    d = monthNames[new Date(date).getMonth()];
+
+    return d;
+  }
+
+  if (type === "day") {
+    d = new Date(date).getDate();
+    return d;
+  }
+
+  if (type === "year") {
+    d = new Date(date).getFullYear();
+    return d;
+  }
+
+  return d;
+};
+
+export const airportDetails = function(airports, flightId, type) {
+  let details = airports.filter(airport => airport.id === flightId);
+  return details[0][type];
+};
+
 // Function that filter the flight offers based on travel time:
 export const filterFlightOffers = function(flights, min, max) {
   let newList = [],
@@ -30,6 +91,8 @@ export const filterFlightOffers = function(flights, min, max) {
       newList.push(flightOffer);
     }
   });
+  console.log("oldlist", oldList);
+  console.log("newlist", newList);
   return newList;
 };
 
