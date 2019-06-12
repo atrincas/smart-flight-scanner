@@ -18,16 +18,23 @@ import {
 } from "../styled/Lib";
 
 import { filterFlightOffers, convertQueries } from "../utils";
+import { getFinalFlightOffers } from "../actions/getFinalFlightOffers";
 
 function SearchForm() {
   const [startSearch, setStartSearch] = useState(false);
-  const [finalFlightOffers, setFinalFlightOffers] = useState([]);
   const [noSearchResults, setNoSearchResults] = useState(false);
   const queries = useSelector(state => state.searchQueries);
   const flightOffers = useSelector(state => state.flightOffers.flightOffers);
+  const finalFlightOffers = useSelector(
+    state => state.finalFlightOffers.finalFlightOffers
+  );
   const dispatch = useDispatch();
   const getFlightOffers = useCallback(
     values => dispatch(fetchFlightOffers(values)),
+    [dispatch]
+  );
+  const dipatchFinalFlightOffers = useCallback(
+    values => dispatch(getFinalFlightOffers(values)),
     [dispatch]
   );
 
@@ -38,13 +45,13 @@ function SearchForm() {
         queries["minTravelTime"],
         queries["maxTravelTime"]
       );
-      setFinalFlightOffers(final);
+      dipatchFinalFlightOffers(final);
     }
   }, [flightOffers]);
 
   useEffect(() => {
-    console.log("finalflightoffers", noSearchResults);
     if (startSearch && !finalFlightOffers.length) {
+      debugger;
       setNoSearchResults(true);
     }
   }, [finalFlightOffers]);
@@ -54,7 +61,6 @@ function SearchForm() {
     setNoSearchResults(false);
     setStartSearch(true);
     const convertedQueries = convertQueries(queries);
-    console.log(convertedQueries);
     getFlightOffers(convertedQueries);
   };
   return (
@@ -80,12 +86,7 @@ function SearchForm() {
           </Form>
         </FormContainer>
       </Header>
-      {startSearch ? (
-        <FlightOffers
-          offers={finalFlightOffers}
-          noSearchResults={noSearchResults}
-        />
-      ) : null}
+      {startSearch ? <FlightOffers noSearchResults={noSearchResults} /> : null}
     </>
   );
 }
