@@ -23,6 +23,7 @@ import { getFinalFlightOffers } from "../actions/getFinalFlightOffers";
 function SearchForm() {
   const [startSearch, setStartSearch] = useState(false);
   const [noSearchResults, setNoSearchResults] = useState(false);
+  const [isLoading, setIsloading] = useState(false);
   const queries = useSelector(state => state.searchQueries);
   const flightOffers = useSelector(state => state.flightOffers.flightOffers);
   const finalFlightOffers = useSelector(
@@ -46,18 +47,24 @@ function SearchForm() {
         queries["maxTravelTime"]
       );
       dipatchFinalFlightOffers(final);
+      setIsloading(false);
+    }
+    if (typeof flightOffers === "undefined" || !flightOffers.length) {
+      setNoSearchResults(true);
+      setIsloading(false);
     }
   }, [flightOffers]);
 
   useEffect(() => {
     if (startSearch && !finalFlightOffers.length) {
-      debugger;
       setNoSearchResults(true);
+      setIsloading(false);
     }
   }, [finalFlightOffers]);
 
   const handleSearch = e => {
     e.preventDefault();
+    setIsloading(true);
     setNoSearchResults(false);
     setStartSearch(true);
     const convertedQueries = convertQueries(queries);
@@ -86,7 +93,9 @@ function SearchForm() {
           </Form>
         </FormContainer>
       </Header>
-      {startSearch ? <FlightOffers noSearchResults={noSearchResults} /> : null}
+      {startSearch ? (
+        <FlightOffers isLoading={isLoading} noSearchResults={noSearchResults} />
+      ) : null}
     </>
   );
 }

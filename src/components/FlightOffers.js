@@ -30,13 +30,12 @@ import {
 
 const uuidv4 = require("uuid/v4");
 
-function FlightOffers({ noSearchResults }) {
+function FlightOffers({ isLoading, noSearchResults }) {
   const airports = useSelector(state => state.airports.airports);
   const offers = useSelector(
     state => state.finalFlightOffers.finalFlightOffers
   );
-  return (typeof offers === "undefined" || !offers.length) &&
-    !noSearchResults ? (
+  return isLoading ? (
     <div>...Loading</div>
   ) : noSearchResults ? (
     <div>No Search Results!</div>
