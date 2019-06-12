@@ -13,8 +13,17 @@ import styled from "styled-components";
 const uuidv4 = require("uuid/v4");
 
 const FlightOffersContainer = styled.div``;
+const OrderByBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  margin: 10px auto;
+  padding: 10px;
+  width: 55%;
+`;
 const FlightOffersUl = styled.ul`
   list-style: none;
+  padding: 0;
 `;
 const FlightOffersLi = styled.li`
   margin: 10px;
@@ -147,6 +156,14 @@ function FlightOffers({ offers, noSearchResults }) {
     <div>No Search Results!</div>
   ) : (
     <FlightOffersContainer>
+      <OrderByBar>
+        <div>
+          <b>Order By</b>
+        </div>
+        <button>Date</button>
+        <button>Price low-high</button>
+        <button>Price high-low</button>
+      </OrderByBar>
       <FlightOffersUl>
         {offers.map(flightOffer => {
           return (
