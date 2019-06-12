@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import {
@@ -35,22 +35,61 @@ function FlightOffers({ isLoading, noSearchResults }) {
   const offers = useSelector(
     state => state.finalFlightOffers.finalFlightOffers
   );
+  const [finalOffers, setFinalOffers] = useState([]);
+
+  useEffect(() => {}, [finalOffers]);
+
+  useEffect(() => {
+    setFinalOffers(offers);
+  }, [offers]);
+
+  const handleOrderByDate = () => {
+    let arr = finalOffers;
+    let newOrder = arr.sort(function(a, b) {
+      return (
+        new Date(b.outboundFlight.departureDateTime) -
+        new Date(a.outboundFlight.departureDateTime)
+      );
+    });
+    setFinalOffers(newOrder);
+  };
+
+  const handleOrderByPriceLH = () => {
+    let arr = finalOffers;
+    let newOrder = arr.sort(
+      (a, b) =>
+        a.pricingInfoSum.totalPriceOnePassenger -
+        b.pricingInfoSum.totalPriceOnePassenger
+    );
+    return newOrder;
+  };
+  const handleOrderByPriceHL = () => {
+    let arr = finalOffers;
+    let newOrder = arr.sort(
+      (a, b) =>
+        b.pricingInfoSum.totalPriceOnePassenger -
+        a.pricingInfoSum.totalPriceOnePassenger
+    );
+    return newOrder;
+  };
   return isLoading ? (
     <div>...Loading</div>
   ) : noSearchResults ? (
     <div>No Search Results!</div>
+  ) : !finalOffers.length ? (
+    <div>...Loading</div>
   ) : (
     <FlightOffersContainer>
       <OrderByBar>
         <div>
           <b>Order By</b>
         </div>
-        <button>Date</button>
-        <button>Price low-high</button>
-        <button>Price high-low</button>
+        <button onClick={handleOrderByDate}>Date</button>
+        <button onClick={handleOrderByPriceLH}>Price low-high</button>
+        <button onClick={handleOrderByPriceHL}>Price high-low</button>
       </OrderByBar>
       <FlightOffersUl>
-        {offers.map(flightOffer => {
+        {finalOffers.map(flightOffer => {
           return (
             <FlightOffersLi key={uuidv4()}>
               <TicketContainer>
