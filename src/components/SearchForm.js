@@ -39,14 +39,19 @@ function SearchForm() {
         queries["maxTravelTime"]
       );
       setFinalFlightOffers(final);
-    } else if (typeof flightOffers === "undefined") {
-      setNoSearchResults(true);
     }
   }, [flightOffers]);
 
+  useEffect(() => {
+    console.log("finalflightoffers", noSearchResults);
+    if (startSearch && !finalFlightOffers.length) {
+      setNoSearchResults(true);
+    }
+  }, [finalFlightOffers]);
+
   const handleSearch = e => {
     e.preventDefault();
-    setFinalFlightOffers([]);
+    setNoSearchResults(false);
     setStartSearch(true);
     const convertedQueries = convertQueries(queries);
     console.log(convertedQueries);
