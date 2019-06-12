@@ -234,7 +234,9 @@ export const TicketPrice = styled.div`
   width: 25%;
 `;
 
-export const TicketButton = styled.button`
+export const TicketButton = styled.button.attrs({
+  target: "_blank"
+})`
   display: inline-block;
   margin: 0;
   padding: 0.375rem 1.125rem;

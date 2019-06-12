@@ -257,7 +257,9 @@ function FlightOffers({ isLoading, noSearchResults }) {
                   <PriceTitle>
                     &euro;{flightOffer.pricingInfoSum.totalPriceOnePassenger}
                   </PriceTitle>
-                  <TicketButton>Buy Tickets</TicketButton>
+                  <TicketButton as="a" href={flightOffer.deeplink.href}>
+                    Buy Tickets
+                  </TicketButton>
                 </TicketPrice>
               </TicketContainer>
             </FlightOffersLi>
