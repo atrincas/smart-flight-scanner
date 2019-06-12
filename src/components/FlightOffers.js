@@ -61,7 +61,7 @@ function FlightOffers({ isLoading, noSearchResults }) {
         a.pricingInfoSum.totalPriceOnePassenger -
         b.pricingInfoSum.totalPriceOnePassenger
     );
-    return newOrder;
+    setFinalOffers(newOrder);
   };
   const handleOrderByPriceHL = () => {
     let arr = finalOffers;
@@ -70,7 +70,7 @@ function FlightOffers({ isLoading, noSearchResults }) {
         b.pricingInfoSum.totalPriceOnePassenger -
         a.pricingInfoSum.totalPriceOnePassenger
     );
-    return newOrder;
+    setFinalOffers(newOrder);
   };
   return isLoading ? (
     <div>...Loading</div>
