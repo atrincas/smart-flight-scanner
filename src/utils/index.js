@@ -91,8 +91,6 @@ export const filterFlightOffers = function(flights, min, max) {
       newList.push(flightOffer);
     }
   });
-  console.log("oldlist", oldList);
-  console.log("newlist", newList);
   return newList;
 };
 
