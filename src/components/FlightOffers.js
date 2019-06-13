@@ -37,25 +37,34 @@ function FlightOffers({ isLoading, noSearchResults }) {
   );
   const [finalOffers, setFinalOffers] = useState([]);
 
-  useEffect(() => {}, [finalOffers]);
-
   useEffect(() => {
     setFinalOffers(offers);
   }, [offers]);
 
-  const handleOrderByDate = () => {
-    let arr = finalOffers;
+  const handleOrderByDateDes = () => {
+    // Make sure the array is passed by value:
+    let arr = finalOffers.slice();
     let newOrder = arr.sort(function(a, b) {
-      return (
-        new Date(b.outboundFlight.departureDateTime) -
-        new Date(a.outboundFlight.departureDateTime)
-      );
+      let dateA = new Date(a.outboundFlight.departureDateTime);
+      let dateB = new Date(b.outboundFlight.departureDateTime);
+      return dateB - dateA;
+    });
+    setFinalOffers(newOrder);
+  };
+  const handleOrderByDateAsc = () => {
+    // Make sure the array is passed by value:
+    let arr = finalOffers.slice();
+    let newOrder = arr.sort(function(a, b) {
+      let dateA = new Date(a.outboundFlight.departureDateTime);
+      let dateB = new Date(b.outboundFlight.departureDateTime);
+      return dateA - dateB;
     });
     setFinalOffers(newOrder);
   };
 
   const handleOrderByPriceLH = () => {
-    let arr = finalOffers;
+    // Make sure the array is passed by value:
+    let arr = finalOffers.slice();
     let newOrder = arr.sort(
       (a, b) =>
         a.pricingInfoSum.totalPriceOnePassenger -
@@ -64,7 +73,8 @@ function FlightOffers({ isLoading, noSearchResults }) {
     setFinalOffers(newOrder);
   };
   const handleOrderByPriceHL = () => {
-    let arr = finalOffers;
+    // Make sure the array is passed by value:
+    let arr = finalOffers.slice();
     let newOrder = arr.sort(
       (a, b) =>
         b.pricingInfoSum.totalPriceOnePassenger -
@@ -84,7 +94,10 @@ function FlightOffers({ isLoading, noSearchResults }) {
         <div>
           <b>Order By</b>
         </div>
-        <button onClick={handleOrderByDate}>Date</button>
+        <button onClick={handleOrderByDateAsc}>Departure Date Ascending</button>
+        <button onClick={handleOrderByDateDes}>
+          Departure Date Descending
+        </button>
         <button onClick={handleOrderByPriceLH}>Price low-high</button>
         <button onClick={handleOrderByPriceHL}>Price high-low</button>
       </OrderByBar>
