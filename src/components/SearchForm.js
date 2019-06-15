@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 
 import { fetchFlightOffers } from "../actions/fetchFlightOffers";
 
@@ -14,7 +14,8 @@ import {
   FormContainer,
   FormRow,
   Form,
-  FormButton
+  FormButton,
+  AlertText
 } from "../styled/Lib";
 
 import { filterFlightOffers, convertQueries } from "../utils";
@@ -24,6 +25,19 @@ function SearchForm() {
   const [startSearch, setStartSearch] = useState(false);
   const [noSearchResults, setNoSearchResults] = useState(false);
   const [isLoading, setIsloading] = useState(false);
+  const [showAlertText, setShowAlertText] = useState(false);
+  const updatedOvernightStays = useSelector(
+    state => state.searchQueries.overnightStay,
+    shallowEqual
+  );
+  const updatedEndDate = useSelector(
+    state => state.searchQueries.endPeriod,
+    shallowEqual
+  );
+  const updatedStartDate = useSelector(
+    state => state.searchQueries.startPeriod,
+    shallowEqual
+  );
   const queries = useSelector(state => state.searchQueries);
   const flightOffers = useSelector(state => state.flightOffers.flightOffers);
   const finalFlightOffers = useSelector(
@@ -38,6 +52,18 @@ function SearchForm() {
     values => dispatch(getFinalFlightOffers(values)),
     [dispatch]
   );
+
+  useEffect(() => {
+    if (updatedOvernightStays === 1) {
+      setShowAlertText(false);
+    } else {
+      setShowAlertText(true);
+    }
+  }, [updatedOvernightStays, updatedStartDate]);
+
+  useEffect(() => {
+    setShowAlertText(false);
+  }, [updatedEndDate]);
 
   useEffect(() => {
     if (typeof flightOffers !== "undefined" && flightOffers.length > 0) {
@@ -86,6 +112,13 @@ function SearchForm() {
             </FormRow>
             <FormRow>
               <SelectStay />
+            </FormRow>
+            <FormRow>
+              {showAlertText ? (
+                <AlertText>
+                  Travel period has been changed! Adjust if necessary.
+                </AlertText>
+              ) : null}
             </FormRow>
             <FormRow>
               <FormButton />

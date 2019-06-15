@@ -104,6 +104,15 @@ export const InputNumber = styled.input`
   transition: 0.2s all;
 `;
 
+export const AlertText = styled.div`
+  display: inline-block;
+  font-size: 12px;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  font-style: italic;
+  color: red;
+`;
+
 export const FormLabel = styled.span`
   position: absolute;
   top: 6px;
