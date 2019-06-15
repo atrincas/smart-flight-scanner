@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, shallowEqual, useSelector } from "react-redux";
 
 import {
   adjustStartPeriod,
@@ -7,6 +7,7 @@ import {
 } from "../actions/searchFormActions";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { addDays } from "../utils";
 
 import "../styled/date-picker.css";
 import styled from "styled-components";
@@ -23,15 +24,13 @@ const LabelCalender = styled.label`
   color: #98c9ee;
 `;
 
-const addDays = (date, days) => {
-  let result = new Date(date);
-  result.setDate(result.getDate() + days);
-  return result;
-};
-
 function SelectPeriod() {
   const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(addDays(new Date(), 2));
+  const [endDate, setEndDate] = useState(addDays(new Date(), 1));
+  const updatedOvernightStays = useSelector(
+    state => state.searchQueries.overnightStay,
+    shallowEqual
+  );
   const dispatch = useDispatch();
   const changeStartPeriod = useCallback(
     value => dispatch(adjustStartPeriod(value)),
@@ -59,6 +58,15 @@ function SelectPeriod() {
   useEffect(() => {
     changeEndPeriod(endDate);
   }, [changeEndPeriod]);
+
+  useEffect(() => {
+    // Prevent the calender from breaking because input is empty:
+    if (updatedOvernightStays === "") {
+      return;
+    }
+    let newEndDate = addDays(startDate, updatedOvernightStays);
+    setEndDate(newEndDate);
+  }, [updatedOvernightStays]);
 
   return (
     <FormGroup>

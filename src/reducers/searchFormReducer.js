@@ -13,7 +13,7 @@ const initialState = {
   maxTravelTime: 10,
   startPeriod: "",
   endPeriod: "",
-  overnightStay: 0
+  overnightStay: 1
 };
 
 export default (state = initialState, action) => {

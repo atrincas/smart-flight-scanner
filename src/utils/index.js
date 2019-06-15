@@ -107,13 +107,13 @@ const convertDate = function(date) {
 
 export const addDays = function(date, days) {
   let result = new Date(date);
-  result.setDate(result.getDate() + days);
+  result.setDate(result.getDate() + parseInt(days));
   return result;
 };
 
 export const subDays = function(date, days) {
   let result = new Date(date);
-  result.setDate(result.getDate() - days);
+  result.setDate(result.getDate() - parseInt(days));
   return result;
 };
 

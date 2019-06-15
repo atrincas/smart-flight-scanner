@@ -6,7 +6,7 @@ import { adjustOvernightStays } from "../actions/searchFormActions";
 import { FormGroup, FormLabel, InputNumber } from "../styled/Lib";
 
 function SelectStay() {
-  const [overnightStays, setOvernightStays] = useState(0);
+  const [overnightStays, setOvernightStays] = useState(1);
   const dispatch = useDispatch();
   const changeOvernightStays = useCallback(
     value => dispatch(adjustOvernightStays(value)),
@@ -23,7 +23,7 @@ function SelectStay() {
       <FormLabel>Number of overnight stays</FormLabel>
       <InputNumber
         type="number"
-        min="0"
+        min="1"
         max="300"
         value={overnightStays}
         onChange={handleOvernightStays}
