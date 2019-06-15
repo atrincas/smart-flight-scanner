@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 
 import { fetchFlightOffers } from "../actions/fetchFlightOffers";
+import { FETCH_FLIGHT_OFFERS_FAILED } from "../actions/types";
 
 import SelectAirport from "./SelectAirport";
 import SelectTravelTime from "./SelectTravelTime";
@@ -39,11 +40,16 @@ function SearchForm() {
     shallowEqual
   );
   const queries = useSelector(state => state.searchQueries);
+  const errorCode = useSelector(state => state.flightOffers.errorCode);
   const flightOffers = useSelector(state => state.flightOffers.flightOffers);
   const finalFlightOffers = useSelector(
     state => state.finalFlightOffers.finalFlightOffers
   );
   const dispatch = useDispatch();
+  const resetErrorCode = useCallback(
+    value => dispatch({ type: FETCH_FLIGHT_OFFERS_FAILED, payload: 0 }),
+    [dispatch]
+  );
   const getFlightOffers = useCallback(
     values => dispatch(fetchFlightOffers(values)),
     [dispatch]
@@ -87,6 +93,14 @@ function SearchForm() {
       setIsloading(false);
     }
   }, [finalFlightOffers]);
+
+  useEffect(() => {
+    if (errorCode === 400) {
+      setNoSearchResults(true);
+      setIsloading(false);
+      resetErrorCode();
+    }
+  }, [errorCode]);
 
   const handleSearch = e => {
     e.preventDefault();

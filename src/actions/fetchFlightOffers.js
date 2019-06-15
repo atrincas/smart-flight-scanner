@@ -1,7 +1,8 @@
 import axios from "axios";
 import {
   FETCH_FLIGHT_OFFERS_REQUEST,
-  FETCH_FLIGHT_OFFERS_SUCCES
+  FETCH_FLIGHT_OFFERS_SUCCES,
+  FETCH_FLIGHT_OFFERS_FAILED
 } from "./types";
 
 const fetchFightOffersRequest = () => {
@@ -9,6 +10,10 @@ const fetchFightOffersRequest = () => {
 };
 const fetchFlightOffersResult = data => {
   return { type: FETCH_FLIGHT_OFFERS_SUCCES, payload: data };
+};
+
+const fetchFlightOffersFailed = data => {
+  return { type: FETCH_FLIGHT_OFFERS_FAILED, payload: data };
 };
 
 export const fetchFlightOffers = queries => {
@@ -25,9 +30,20 @@ export const fetchFlightOffers = queries => {
     },
     headers: { apikey: key }
   };
-  return async dispatch => {
-    dispatch(fetchFightOffersRequest());
-    const response = await axios(config);
-    dispatch(fetchFlightOffersResult(response.data.flightOffer));
+  return async function(dispatch) {
+    try {
+      dispatch(fetchFightOffersRequest());
+      const response = await axios(config);
+      dispatch(fetchFlightOffersResult(response.data.flightOffer));
+    } catch (error) {
+      dispatch(fetchFlightOffersFailed(error.response.status));
+    }
   };
+
+  // async dispatch => {
+  //   dispatch(fetchFightOffersRequest());
+  //   const response = await axios(config);
+  //   console.log(response);
+  //   dispatch(fetchFlightOffersResult(response.data.flightOffer));
+  // };
 };
