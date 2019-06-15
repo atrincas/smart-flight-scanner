@@ -104,6 +104,7 @@ function SearchForm() {
 
   const handleSearch = e => {
     e.preventDefault();
+    setShowAlertText(false);
     setIsloading(true);
     setNoSearchResults(false);
     setStartSearch(true);
@@ -122,7 +123,7 @@ function SearchForm() {
               <SelectTravelTime />
             </FormRow>
             <FormRow>
-              <SelectPeriod />
+              <SelectPeriod isError={showAlertText} />
             </FormRow>
             <FormRow>
               <SelectStay />
@@ -130,7 +131,8 @@ function SearchForm() {
             <FormRow>
               {showAlertText ? (
                 <AlertText>
-                  Travel period has been changed! Adjust if necessary.
+                  Selected period has been changed! Adjust the end date if
+                  necessary.
                 </AlertText>
               ) : null}
             </FormRow>
