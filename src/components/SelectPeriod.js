@@ -66,7 +66,7 @@ function SelectPeriod() {
     }
     let newEndDate = addDays(startDate, updatedOvernightStays);
     setEndDate(newEndDate);
-  }, [updatedOvernightStays]);
+  }, [updatedOvernightStays, startDate]);
 
   return (
     <FormGroup>
