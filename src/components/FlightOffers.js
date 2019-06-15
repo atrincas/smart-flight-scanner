@@ -11,6 +11,7 @@ import {
 import {
   FlightOffersContainer,
   OrderByBar,
+  OrderByButton,
   FlightOffersUl,
   FlightOffersLi,
   TicketContainer,
@@ -94,12 +95,18 @@ function FlightOffers({ isLoading, noSearchResults }) {
         <div>
           <b>Order By</b>
         </div>
-        <button onClick={handleOrderByDateAsc}>Departure Date Ascending</button>
-        <button onClick={handleOrderByDateDes}>
+        <OrderByButton onClick={handleOrderByDateAsc}>
+          Departure Date Ascending
+        </OrderByButton>
+        <OrderByButton onClick={handleOrderByDateDes}>
           Departure Date Descending
-        </button>
-        <button onClick={handleOrderByPriceLH}>Price low-high</button>
-        <button onClick={handleOrderByPriceHL}>Price high-low</button>
+        </OrderByButton>
+        <OrderByButton onClick={handleOrderByPriceLH}>
+          Price low-high
+        </OrderByButton>
+        <OrderByButton onClick={handleOrderByPriceHL}>
+          Price high-low
+        </OrderByButton>
       </OrderByBar>
       <FlightOffersUl>
         {finalOffers.map(flightOffer => {

@@ -129,16 +129,25 @@ export const FormButton = styled.input.attrs({
   type: "submit",
   value: "Show Flights"
 })`
-  color: #fff;
-  background-color: #4fa3e3;
-  cursor: pointer;
-  font-weight: 400;
-  height: 65px;
-  font-size: 18px;
-  border: none;
   width: 100%;
-  border-radius: 4px;
+  height: 65px;
+  cursor: pointer;
+  padding: 0.25em 0.5em;
+  font-size: 18px;
   text-transform: uppercase;
+  color: #fff;
+  background: #4fa3e4;
+  border-radius: 4px;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.05);
+  font-weight: bold;
+  border: solid 1px #1d5d90;
+  &:active {
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+  }
+  &:focus {
+    outline: #1d5d90;
+  }
 `;
 
 // FLIGHTOFFERS.JS //
@@ -146,10 +155,33 @@ export const FlightOffersContainer = styled.div``;
 export const OrderByBar = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background-color: #fff;
   margin: 10px auto;
   padding: 10px;
   width: 55%;
+  border-radius: 5px
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+`;
+export const OrderByButton = styled.button`
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  padding: 0.25em 0.5em;
+  text-decoration: none;
+  color: #fff;
+  background: #4fa3e4;
+  border-radius: 4px;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.05);
+  font-weight: bold;
+  border: solid 1px #1d5d90;
+  &:active {
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+  }
+  &:focus {
+    outline: #1d5d90;
+  }
 `;
 export const FlightOffersUl = styled.ul`
   list-style: none;
@@ -165,6 +197,12 @@ export const TicketContainer = styled.div`
   margin: auto;
   padding: 10px;
   width: 55%;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.5s;
+  &:hover {
+    box-shadow: 0 7px 14px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22);
+  }
 `;
 export const TicketDetails = styled.div`
   display: flex;
