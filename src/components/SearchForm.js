@@ -27,6 +27,7 @@ function SearchForm() {
   const [noSearchResults, setNoSearchResults] = useState(false);
   const [isLoading, setIsloading] = useState(false);
   const [showAlertText, setShowAlertText] = useState(false);
+  const [alertText, setAlertText] = useState("");
   const updatedOvernightStays = useSelector(
     state => state.searchQueries.overnightStay,
     shallowEqual
@@ -62,7 +63,13 @@ function SearchForm() {
   useEffect(() => {
     if (updatedOvernightStays === 1) {
       setShowAlertText(false);
+    } else if (updatedOvernightStays === "") {
+      setAlertText("Number of overnight stays cannot be empty!");
+      setShowAlertText(true);
     } else {
+      setAlertText(
+        "Selected period has been changed! Adjust the end date if necessary."
+      );
       setShowAlertText(true);
     }
   }, [updatedOvernightStays, updatedStartDate]);
@@ -104,12 +111,16 @@ function SearchForm() {
 
   const handleSearch = e => {
     e.preventDefault();
-    setShowAlertText(false);
-    setIsloading(true);
-    setNoSearchResults(false);
-    setStartSearch(true);
-    const convertedQueries = convertQueries(queries);
-    getFlightOffers(convertedQueries);
+    if (updatedOvernightStays === "") {
+      setNoSearchResults(true);
+    } else {
+      setShowAlertText(false);
+      setIsloading(true);
+      setNoSearchResults(false);
+      setStartSearch(true);
+      const convertedQueries = convertQueries(queries);
+      getFlightOffers(convertedQueries);
+    }
   };
   return (
     <>
@@ -123,18 +134,13 @@ function SearchForm() {
               <SelectTravelTime />
             </FormRow>
             <FormRow>
-              <SelectPeriod isError={showAlertText} />
+              <SelectPeriod isError={alertText === "Selected period has been changed! Adjust the end date if necessary." ? showAlertText : false} />
             </FormRow>
             <FormRow>
-              <SelectStay />
+              <SelectStay isError={alertText === "Number of overnight stays cannot be empty!" ? showAlertText : false} />
             </FormRow>
             <FormRow>
-              {showAlertText ? (
-                <AlertText>
-                  Selected period has been changed! Adjust the end date if
-                  necessary.
-                </AlertText>
-              ) : null}
+              {showAlertText ? <AlertText>{alertText}</AlertText> : null}
             </FormRow>
             <FormRow>
               <FormButton />
