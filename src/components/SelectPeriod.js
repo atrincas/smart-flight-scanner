@@ -24,7 +24,7 @@ const LabelCalender = styled.label`
   color: #98c9ee;
 `;
 
-function SelectPeriod() {
+function SelectPeriod({ isError }) {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(addDays(new Date(), 1));
   const updatedOvernightStays = useSelector(
@@ -89,7 +89,7 @@ function SelectPeriod() {
         onChange={handleEndDate}
         minDate={startDate}
         dateFormat="dd/MM/yyy"
-        className="calender"
+        className={isError ? "calender is-error" : "calender"}
       />
     </FormGroup>
   );
