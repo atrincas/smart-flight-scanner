@@ -174,7 +174,10 @@ export const FormButton = styled.input.attrs({
 `;
 
 // FLIGHTOFFERS.JS //
-export const FlightOffersContainer = styled.div``;
+export const FlightOffersContainer = styled.div`
+  position: relative;
+  min-height: 100vh;
+`;
 export const OrderByBar = styled.div`
   display: flex;
   justify-content: space-between;
