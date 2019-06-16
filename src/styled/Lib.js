@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { createGlobalStyle } from "styled-components";
 import headerBackground from "./img/header-background.jpeg";
 
@@ -12,6 +12,29 @@ export const GlobalStyle = createGlobalStyle`
     background-color: #f3f2f5;
   }
   `;
+
+// Rotate keyframes:
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+`;
+export const Loader = styled.div`
+  position: absolute;
+  top: calc(50% - 4em);
+  left: calc(50% - 4em);
+  width: 6em;
+  height: 6em;
+  border: 1.1em solid rgba(0, 0, 0, 0.2);
+  border-left: 1.1em solid #4fa3e3;
+  border-radius: 50%;
+  animation: ${rotate} 1.1s linear infinite;
+  transition: opacity 0.3s;
+`;
 
 // SEARCHFORM.JS //
 export const Header = styled.div`

@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchAirports } from "./actions";
 import SearchForm from "./components/SearchForm";
 
+import { Loader } from "./styled/Lib";
+
 export default function App() {
   const dispatch = useDispatch();
   const getAirports = useCallback(() => dispatch(fetchAirports()), [dispatch]);
@@ -13,5 +15,5 @@ export default function App() {
     getAirports();
   }, [getAirports]);
 
-  return airports.isFetching ? <div>...Loading</div> : <SearchForm />;
+  return airports.isFetching ? <Loader /> : <SearchForm />;
 }
