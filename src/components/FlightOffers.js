@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 
 import {
@@ -32,12 +32,20 @@ import {
 
 const uuidv4 = require("uuid/v4");
 
+const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop);
+
 function FlightOffers({ isLoading, noSearchResults }) {
   const airports = useSelector(state => state.airports.airports);
   const offers = useSelector(
     state => state.finalFlightOffers.finalFlightOffers
   );
   const [finalOffers, setFinalOffers] = useState([]);
+  const topContainer = useRef(null);
+
+  // Scroll to top of FlightOffersContainer:
+  useEffect(() => {
+    scrollToRef(topContainer);
+  }, []);
 
   useEffect(() => {
     setFinalOffers(offers);
@@ -85,7 +93,7 @@ function FlightOffers({ isLoading, noSearchResults }) {
     setFinalOffers(newOrder);
   };
   return (
-    <FlightOffersContainer>
+    <FlightOffersContainer ref={topContainer}>
       {isLoading ? (
         <Loader />
       ) : noSearchResults ? (
