@@ -134,10 +134,23 @@ function SearchForm() {
               <SelectTravelTime />
             </FormRow>
             <FormRow>
-              <SelectPeriod isError={alertText === "Selected period has been changed! Adjust the end date if necessary." ? showAlertText : false} />
+              <SelectPeriod
+                isError={
+                  alertText ===
+                  "Selected period has been changed! Adjust the end date if necessary."
+                    ? showAlertText
+                    : false
+                }
+              />
             </FormRow>
             <FormRow>
-              <SelectStay isError={alertText === "Number of overnight stays cannot be empty!" ? showAlertText : false} />
+              <SelectStay
+                isError={
+                  alertText === "Number of overnight stays cannot be empty!"
+                    ? showAlertText
+                    : false
+                }
+              />
             </FormRow>
             <FormRow>
               {showAlertText ? <AlertText>{alertText}</AlertText> : null}

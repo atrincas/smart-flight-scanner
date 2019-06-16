@@ -46,7 +46,7 @@ function FlightOffers({ isLoading, noSearchResults }) {
   // Scroll to top of FlightOffersContainer:
   useEffect(() => {
     scrollToRef(topContainer);
-  }, []);
+  }, [isLoading]);
 
   useEffect(() => {
     setFinalOffers(offers);
