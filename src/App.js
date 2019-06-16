@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { fetchAirports } from "./actions";
+import { fetchAirports } from "./actions/fetchAirports";
 import SearchForm from "./components/SearchForm";
 
 export default function App() {

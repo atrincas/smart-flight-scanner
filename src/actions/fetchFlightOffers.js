@@ -39,11 +39,4 @@ export const fetchFlightOffers = queries => {
       dispatch(fetchFlightOffersFailed(error.response.status));
     }
   };
-
-  // async dispatch => {
-  //   dispatch(fetchFightOffersRequest());
-  //   const response = await axios(config);
-  //   console.log(response);
-  //   dispatch(fetchFlightOffersResult(response.data.flightOffer));
-  // };
 };
