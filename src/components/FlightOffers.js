@@ -10,6 +10,7 @@ import {
 
 import {
   Loader,
+  FadeIn,
   FlightOffersContainer,
   OrderByBar,
   OrderByButton,
@@ -95,11 +96,15 @@ function FlightOffers({ isLoading, noSearchResults }) {
   return (
     <FlightOffersContainer ref={topContainer}>
       {isLoading ? (
-        <Loader />
+        <FadeIn>
+          <Loader />
+        </FadeIn>
       ) : noSearchResults ? (
         <div>No Search Results!</div>
       ) : !finalOffers.length ? (
-        <Loader />
+        <FadeIn>
+          <Loader />
+        </FadeIn>
       ) : (
         <>
           <OrderByBar>

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchAirports } from "./actions/fetchAirports";
 import SearchForm from "./components/SearchForm";
 
-import { Loader } from "./styled/Lib";
+import { Loader, FadeIn } from "./styled/Lib";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -15,5 +15,11 @@ export default function App() {
     getAirports();
   }, [getAirports]);
 
-  return airports.isFetching ? <Loader /> : <SearchForm />;
+  return airports.isFetching ? (
+    <Loader />
+  ) : (
+    <FadeIn duration="0.8s" delay="0.2s">
+      <SearchForm />
+    </FadeIn>
+  );
 }
