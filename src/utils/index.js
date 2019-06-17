@@ -128,9 +128,9 @@ export const calcStartPeriodRange = function(
 };
 
 export const calcEndPeriodRange = function(startDate, endDate, overnighStays) {
-  // let start = addDays(startDate, overnighStays),
-  //   end = endDate;
-  return convertDate(startDate) + "-" + convertDate(endDate);
+  let start = addDays(startDate, overnighStays),
+    end = endDate;
+  return convertDate(start) + "-" + convertDate(end);
 };
 
 export const convertQueries = function(queries) {
