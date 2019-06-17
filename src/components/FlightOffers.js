@@ -28,7 +28,10 @@ import {
   LineUl,
   TicketPrice,
   TicketButton,
-  PriceTitle
+  PriceTitle,
+  NoSearchResults,
+  NoSearchResultsContainer,
+  TryAgainButton
 } from "../styled/Lib";
 
 const uuidv4 = require("uuid/v4");
@@ -93,6 +96,13 @@ function FlightOffers({ isLoading, noSearchResults }) {
     );
     setFinalOffers(newOrder);
   };
+  const scrollToTop = () => {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: "smooth"
+    });
+  };
   return (
     <FlightOffersContainer ref={topContainer}>
       {isLoading ? (
@@ -100,7 +110,12 @@ function FlightOffers({ isLoading, noSearchResults }) {
           <Loader />
         </FadeIn>
       ) : noSearchResults ? (
-        <div>No Search Results!</div>
+        <NoSearchResultsContainer>
+          <NoSearchResults>
+            <span>No Search Results!</span>
+            <TryAgainButton onClick={scrollToTop}>Try Again</TryAgainButton>
+          </NoSearchResults>
+        </NoSearchResultsContainer>
       ) : !finalOffers.length ? (
         <FadeIn>
           <Loader />

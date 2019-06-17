@@ -374,3 +374,33 @@ export const TicketButton = styled.button.attrs({
 `;
 
 export const PriceTitle = styled.div``;
+
+export const NoSearchResultsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-style: italic;
+  font-weight: 700;
+`;
+export const NoSearchResults = styled.div`
+  display: flex;
+  flex-direction: column
+  justify-content: space-between;
+  align-items: center;
+  min-height: 50px;
+`;
+
+export const TryAgainButton = styled.div`
+  cursor: pointer;
+  padding: 0.25em 0.5em;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #fff;
+  background: #4fa3e4;
+  border-radius: 4px;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.05);
+  font-weight: bold;
+  border: solid 1px #1d5d90;
+`;
